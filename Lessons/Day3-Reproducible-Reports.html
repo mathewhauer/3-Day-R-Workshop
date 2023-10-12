@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Reproducible Reports in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Mathew Hauer" />
+    <script src="libs/header-attrs-2.23/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/metropolis-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Reproducible Reports in R
+]
+.author[
+### Mathew Hauer
+]
+.date[
+### Florida State University
+]
+
+---
+
+
+
+
+
+# Learning objectives
+
+&lt;!-- TO-DO: update after finishing rest of slides --&gt;
+
+- Understand how to use literate programming for reproducible research
+- Basics of Markdown language
+- Learn how to create R Markdown files with code and markdown text
+- Turn R Markdown files into html, pdf, Word, or presentation files
+- Learn about reproducible project workflows
+- (If time allows) Learn some additional R Markdown tips
+
+
+---
+
+class: middle, inverse
+
+# Why Reproducibility?
+
+
+- Evidence your results are correct.
+- Allow others to use our methods and results.
+
+&gt;"An article about computational results is advertising, not scholarship. The actual scholarship is the full software environment, code and data, that produced the result."
+
+-- [(Claerbout and Karrenbach 1992)](https://statweb.stanford.edu/~wavelab/Wavelab_850/wavelab.pdf)
+
+
+&gt; Your closest collaborator is you six months ago, but you don't reply
+&gt; to emails.
+
+-- [@gonuke](https://twitter.com/gonuke), quoting [@mtholder](https://twitter.com/mtholder)
+
+
+---
+
+# Types of Reproducibility
+
+- **Computational reproducibility:** detailed information is provided about
+  + *code, software, hardware and implementation details*.
+
+- **Empirical reproducibility:** detailed information is provided about 
+  + non-computational empirical *scientific experiments and observations [data]*. 
+
+- **Statistical reproducibility:** detailed information is provided about 
+  + the choice of *statistical tests, model parameters, threshold values, etc*.
+
+[R Opensci Reproducibility Guide](https://ropensci-archive.github.io/reproducibility-guide/)
+
+---
+
+# Software tool for reproducibility: *Literate Programming*
+
+&gt;"These tools enable writing and publishing **self-contained documents that include narrative and code used to generate both text and graphical results**.
+
+&gt;In the R ecosystem, knitr [R markdown] and its ancestor Sweave used with RStudio are the main tools for literate computing. Markdown or LaTeX are used for writing the narrative, with chunks of R code sprinkled throughout the narrative. IPython is a popular related system for the Python language, providing an interactive notebook for browser-based literate computing."
+
+[R Opensci Reproducibility Guide](https://ropensci-archive.github.io/reproducibility-guide/)
+
+---
+
+# R Markdown = `.Rmd` file = Code + text
+
+`knitr` is a package that converts `.Rmd` files containing code + markdown syntax to a plain text `.md` markdown file, and then to other formats (html, pdf, Word, etc)
+
+
+&lt;img src="images/ex_rmd.png" width="45%" align="top"&gt; `\(\Rightarrow\)`
+&lt;img src="images/ex_html.png" width="45%" align="top"&gt;
+
+
+---
+# knitr converts `.Rmd` -&gt; `.md` 
+
+.pull-left[
+&lt;img src="images/ex_rmd.png" width="100%" height="60%"&gt;
+]
+
+.pull-right[
+&lt;img src="images/ex_md.png" width="100%" height="60%"&gt;
+]
+
+---
+
+# knitr converts `.Rmd` -&gt; `.md` -&gt; `.html`
+
+.pull-left[
+&lt;img src="images/ex_rmd_html.png" width="100%" height="60%"&gt;
+]
+
+.pull-right[
+&lt;img src="images/ex_html.png" width="100%" height="60%"&gt;
+]
+
+---
+
+# knitr converts `.Rmd` -&gt; `.md` -&gt; `.pdf`
+
+.pull-left[
+&lt;img src="images/ex_rmd_pdf.png" width="100%" height="60%"&gt;
+]
+
+.pull-right[
+&lt;img src="images/ex_pdf2.png" width="100%" height="60%"&gt;
+]
+
+---
+
+# knitr converts `.Rmd` -&gt; `.md` -&gt; `.doc`
+
+.pull-left[
+&lt;img src="images/ex_rmd_word.png" width="100%" height="60%"&gt;
+]
+
+.pull-right[
+&lt;img src="images/ex_word.png" width="50%" height="60%"&gt;
+]
+
+---
+
+# knitr converts `.Rmd` -&gt; `.md` -&gt; slides
+
+.pull-left[
+&lt;img src="images/ex_ioslides.png" width="100%" height="60%"&gt;
+]
+
+.pull-right[
+&lt;img src="images/ex_slides.png" width="80%" height="60%"&gt;
+]
+
+
+
+---
+
+# R Markdown vs. `knitr::knit()`
+
+
+&lt;center&gt;&lt;img src="images/knitr_workflow_sachsmc.png" width="80%" height="80%"&gt;&lt;/center&gt;[Michael Sachs](https://sachsmc.github.io/knit-git-markr-guide/knitr/knit.html)
+
+
+
+---
+
+# Good practices in RStudio
+
+__Use projects__ ([read this](https://r4ds.had.co.nz/workflow-projects.html))
+- Create an RStudio project for each data analysis project
+- A project is associated with a directory folder
+    + Sets *working directory*
+    + Keep data files there
+    + Keep scripts there; edit them, run them in bits or as a whole
+    + Save your outputs (plots and cleaned data) there
+- Only use relative paths, never absolute paths
+    + relative (good): `read_csv("data/mydata.csv")`
+    + absolute (bad): `read_csv("/home/yourname/Documents/stuff/mydata.csv")`
+    
+__Advantages of using projects__
+- standardize file paths
+- keep everything together
+- a whole folder can be shared and run on another computer
+
+
+---
+
+class: middle, inverse, center
+
+# Basic R Markdown example
+
+&lt;center&gt;&lt;img src="images/hex_rmarkdown-200x232.png"&gt;&lt;img src="images/hex_knitr-200x232.png"&gt;&lt;/center&gt;
+
+[https://www.rstudio.com/products/rpackages/](https://www.rstudio.com/products/rpackages/)
+
+
+---
+
+#  Create an R Markdown file (`.Rmd`) 
+
+Two options:
+1. click on File `\(\rightarrow\)` New File `\(\rightarrow\)` R Markdown... , or
+1. in upper left corner of RStudio click on &lt;img src="images/green_plus_create_file.png"&gt;  `\(\rightarrow\)` &lt;img src="images/select_RMarkdown_option.png"&gt;
+
+You should see the following text in your editor window:
+
+&lt;center&gt;&lt;img src="images/default_rmd_html_wide.png" width="62%" height="10%"&gt;&lt;/center&gt;
+
+
+---
+
+# Knit the .Rmd file 
+
+*Before knitting the .Rmd file, you must first **save it**. *
+
+To **knit** the .Rmd file, either
+1. click on the knit icon &lt;img src="images/knit_icon.png"&gt; at the top of the editor window 
+1. or use keyboard shortcuts
+    * Mac: *Command+Shift+K* 
+    * PC:  *Ctrl+Shift+K*
+1. or use the `render()` command in Console - *See Extensions section for details*
+
+A new window will open with the html output.
+
+Remark:
+* The template .Rmd file that RStudio creates will knit to an html file by default
+* Later we will go over knitting to other file types
+
+
+---
+
+# Compare the .Rmd file with its html output 
+
+
+.pull-left[
+.Rmd file
+&lt;img src="images/default_rmd_html.png" width="84%" height="10%"&gt;
+]
+
+.pull-right[
+html output  
+&lt;img src="images/default_html.png" width="64%" height="40%"&gt;
+]
+
+---
+
+# Compare the .Rmd file with its html output 
+
+&lt;center&gt;&lt;img src="images/screenshot_default_rmd2html_markedup.png" width="87%" height="70%"&gt;&lt;/center&gt;
+
+
+
+---
+
+class: middle, inverse
+
+# 3 types of R Markdown content
+
+1. &lt;span style="color:darkorange"&gt; *Text*&lt;/span&gt;
+2. Code chunks
+3. YAML metadata
+
+
+---
+
+class: middle, inverse
+
+# 3 types of R Markdown content
+
+1. &lt;span style="color:darkorange"&gt; *Text*&lt;/span&gt;
+2. Code chunks
+3. YAML metadata
+
+
+---
+
+# Formatting text
+
+* Markdown is a markup language similar to html or LaTeX 
+* All text formatting is specified via code
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_format_text.png" width="100%" height="70%"&gt;
+]
+
+.pull-right[
+
+Output: 
+
+&lt;img src="images/screenshot_format_text_out.png" width="100%" height="70%"&gt;
+
+
+
+]
+
+
+
+
+---
+
+# Headers
+
+* Organize your documents using headers to create sections and subsections
+* Later in the workshop we will cover
+  + automatically numbering headers in output file for easy reference
+  + easily creating a TOC based on the header names
+
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_headers.png" width="35%" height="70%"&gt;
+]
+
+.pull-right[
+Output:
+
+&lt;img src="images/screenshot_headers_out.png" width="45%%" height="100%"&gt;
+
+
+]
+
+---
+
+# RStudio tip
+
+
+You can easily navigate through your .Rmd file if you use headers to outline your text
+
+&lt;center&gt;&lt;img src="images/screenshot_RStudio_headers.png" width="50%" height="100%"&gt;&lt;/center&gt;
+
+
+
+---
+
+# Unnumbered lists
+
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_unnumbered_lists_code.png" width="100%" height="70%"&gt;
+]
+
+.pull-right[
+
+* This is an **unnumbered list**
+  + with *sub-items*
+      - and *sub-sub-items*,
+          - or even deeper.
+* You can use characters *, +, and - to create lists.
+  * The order of the 
+      * characters is not important
+          + and characters can be repeated.
+
+What *is* important is the *spacing*!
++ indent each 
+  * sub-level with a tab and make sure  
+  * there is a space between the character starting the list and the first bit of text,
+  *otherwise the text won't be a new bullet in the list
+
+]
+
+
+---
+
+# Numbered lists
+
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_numbered_lists_code.png" width="85%" height="60%"&gt;
+]
+
+.pull-right[
+Output:
+
+&lt;img src="images/screenshot_numbered_lists_out.png" width="57.5%" height="60%"&gt;
+
+]
+
+
+---
+
+# Math, horizontal rule, and hyperlinks
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_misc.png" width="85%" height="60%"&gt;
+]
+
+.pull-right[
+Output:
+
+* __Mathematical formulas and symbols__ can be included using LaTeX, both as *inline equations* or *formulas*:
+  + Use single `$` for inline equations: `\(y=\beta_0 + \beta_1x + \varepsilon\)`
+  + Use double `$$` for centered formulas:
+  
+`$$\hat{y}= \frac{3}{7} +  5 \mathrm{age} + 3^2 \cdot \mathrm{height}$$` 
+* __Horizontal rule__
+
+***
+* __Hyperlinks__
+  + Learn more about LaTeX at this  [link](http://www.highpoint.edu/physics/files/2014/08/short-math-guide.pdf).
+]
+
+---
+
+# Insert images
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_images_insert.png" width="80%" height="100%"&gt;
+]
+
+.pull-right[
+Output:  
+Gauss and the normal distribution were 
+featured on the 10 Deutsch Mark (DM) bill.
+![alternate text: 10 DM bill](images/DM_10_Gauss.jpeg)
+&lt;!-- The alternate text only appears if the image fails to load. --&gt;
+&lt;!-- By the way, this is how you write comments in markdown!! --&gt;
+
+You can also source an image on the internet instead: 
+![10 DM bill](https://www.leftovercurrency.com/app/uploads/2016/11/10-deutsche-marks-banknote-carl-friedrich-gauss-obverse-1.jpg)
+
+
+&lt;!-- &lt;img src="https://history.info/wp-content/uploads/2015/06/DEU-10m-anv.jpg"&gt;  --&gt;
+
+]
+
+
+---
+
+# Tables created manually
+
+Later we will use R code to create tables from data.
+
+We can create tables using Markdown as well:
+
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_manual_table.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+Output:  
+
+&lt;img src="images/screenshot_manual_table_out.png" width="100%" height="100%"&gt;
+
+
+]
+
+* We **do not recommend** creating tables where the numbers are hard-coded 
+  * since they are **not reproducible**!
+
+---
+
+# Spell check
+
+~~Alas, there are no autmatik sepll chekc to katch you're tipos and grammR.~~
+
+* You can manually do a spell check by clicking on the &lt;img src="images/icon_spellcheck.png"&gt; icon above the editor window. 
+* There is no built-in grammar check in RStudio.
+  + The [`gramr` package](https://github.com/jasdumas/gramr) is an available RStudio Addin.
+
+
+---
+
+# Practice!
+
+.pull-left[
+Create an .Rmd file with file name `example1.Rmd` that creates the html output to the right. 
+
+* Hint: The first line is not a header.
+]
+
+.pull-right[
+&lt;center&gt;&lt;img src="images/screenshot_example1.png" width="32%" height="50%"&gt;&lt;/center&gt;
+]
+
+
+---
+
+class: middle, inverse
+
+# 3 types of R Markdown content
+
+1. Text
+2. &lt;span style="color:darkorange"&gt; *Code chunks*&lt;/span&gt;
+3. YAML metadata
+
+
+---
+
+# Data description: Fisher's (or Anderson's) Iris data set
+
+* n = 150 
+* 3 species of Iris flowers (Setosa, Virginica, and Versicolour)
+  + 50 measurements of each type of Iris
+* variables:
+  + sepal length, sepal width, petal length, petal width, and species
+
+_Can the flower species be determined by these variables?_
+
+&lt;center&gt;&lt;img src="images/Iris_types.png" width="70%" height="50%"&gt;&lt;img src="images/Iris_parts.png" width="28%" height="50%"&gt;&lt;/center&gt;
+[Gareth Duffy](https://github.com/Datagatherer2357/Gareth-Duffy-GMIT-Project)
+
+---
+
+# Code chunks
+
+Chunks of R code start with ` ```{r} ` and end with ` ``` `.  
+For example, the chunk &lt;img src="images/screenshot_summary_iris.png" width="15%" height="50%"&gt; produces the output
+
+
+```r
+summary(iris)
+```
+
+```
+##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##        Species  
+##  setosa    :50  
+##  versicolor:50  
+##  virginica :50  
+##                 
+##                 
+## 
+```
+
+---
+
+# Create a code chunk
+
+Code chunks can be created by either
+
+1. Clicking on ![](images/icon_insert.png) `\(\rightarrow\)` ![](images/icon_insert_Rchunk.png) at top right of editor window, or
+
+1. __Keyboard shortcut__
+  * Mac:   _Command + Option + I_
+  * PC:   _Ctrl + Alt + I_
+
+---
+
+# Chunk options- most common
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_chunks_common.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+
+No options specified: see both code and output
+
+```r
+mean(iris$Sepal.Length)
+```
+
+```
+## [1] 5.843333
+```
+
+__`echo`__ determines whether the R code is __displayed__ or not. The default is `TRUE`. When set to `FALSE`, the code is not displayed in the output:
+
+```
+## [1] 5.843333
+```
+
+__`eval`__ determines whether the R code is __run__ or not. The default is `TRUE`. When set to `FALSE`, the code is not run but is displayed in the output:
+
+```r
+mean(iris$Sepal.Length)
+```
+
+]
+
+---
+
+# More chunk options
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_chunks_include.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+Output: 
+
+__`include`__ determines whether to include the R chunk in the output or not. The default is `TRUE`. When set to `FALSE`, the chunk is run but we do not see the code or its output (note that nothing is displayed below):
+
+
+]
+
+* Setting `include=FALSE` is useful when you have R code that you want to run, but do not want to display either the code or its output.
+
+* See the [R Markdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for more chunk options.
+
+
+---
+
+# Inline code
+
+* You can also report R code output inline with the text
+  * _R code is not shown in this case_ 
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_code_inline.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+
+Output: 
+
+
+
+The mean sepal length for all 3 species combined is 5.8 
+(SD = 0.8) cm.
+
+]
+
+* The code above is an example of where `include=FALSE` is used a chunk option to evaluate the code but not show the code or its output. 
+  + It saves the mean as `mean_SepalLength`, which can then be used later on.
+* For the standard deviation, the inline code did the calculation. 
+* Thus it was not necessary to first save the mean as a variable.
+
+---
+
+# Figures
+
+
+.pull-left[
+Text in editor:
+
+&lt;img src="images/screenshot_ggplot.png" width="100%" height="100%"&gt;
+
+* Figure dimensions specified with `fig.width` and `fig.height`
+* Figure name specified by the chunk label
+  * The figure created by the chunk above is called `Sepal_WidthVsHeight-1.png`
+  * _Chunk names must be unique!_
+* `echo=FALSE` was used to hide the code and only display the figure
+
+]
+
+.pull-right[
+Output: 
+
+![](Day3-Reproducible-Reports_files/figure-html/Sepal_WidthVsHeight-1.png)&lt;!-- --&gt;
+
+]
+
+
+
+---
+
+# Tables - with no formatting
+
+* Below we create a summary table with the mean and SD of sepal lengths
+* The table is displayed with no special formatting
+
+
+```r
+table_sepal_length &lt;- iris %&gt;% 
+  group_by(Species) %&gt;% 
+  summarize(mean = mean(Sepal.Length),
+            SD = sd(Sepal.Length))
+
+table_sepal_length
+```
+
+```
+## # A tibble: 3 × 3
+##   Species     mean    SD
+##   &lt;fct&gt;      &lt;dbl&gt; &lt;dbl&gt;
+## 1 setosa      5.01 0.352
+## 2 versicolor  5.94 0.516
+## 3 virginica   6.59 0.636
+```
+
+
+---
+
+# Tables - with `kable`
+
+* The `kable` command from the `knitr` package has some basic formatting options
+  + __html__ tables: harder to read due to squished spacing; can include caption
+  + __markdown__ tables: nicer formatting; width = page width
+
+.pull-left[
+ Text in editor:
+
+&lt;img src="images/screenshot_kable_code.png" width="87%" height="100%"&gt;
+]
+
+.pull-right[
+Output:
+
+&lt;img src="images/screenshot_kable_out.png" width="80%" height="100%"&gt;
+
+
+
+
+]
+
+
+---
+
+# Tables - use `kableExtra` for more formatting options
+
+.pull-left[
+ Text in editor:
+
+&lt;img src="images/screenshot_kableExtra_code.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+Output:
+
+&lt;img src="images/screenshot_kableExtra_out.png" width="66%" height="100%"&gt;
+
+
+
+]
+
+
+See [Hao Zhu's webpage](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html) for many, many more `kableExtra` options.
+
+
+---
+
+# Global chunk options
+
+* You can set __global chunk options__ that are __applied to all chunks__ in the .Rmd file
+  * Set global options in a chunk at the beginning of the .Rmd file
+  * The template .Rmd file already includes a chunk labeled `setup`
+  * Add more options as desired to this chunk
+* Options are added within the `knitr::opts_chunk$set(...)` command
+* Any of the many chunk options can be set in the `setup` chunk
+
+&lt;center&gt;&lt;img src="images/screenshot_global_options.png" width="80%" height="90%"&gt;&lt;/center&gt;
+
+* `fig.path` sets the folder name where figures generated by the .Rmd file will be saved
+* See the [R Markdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) for more chunk options.
+
+
+---
+
+# Practice! (part 1)
+
+.pull-left[
+Edit the file `example2/example2.Rmd` to create html output that matches `example2/example2_output.html` shown below.
+
+&lt;img src="images/screenshot_example2_part1.png" width="85%" height="100%"&gt;
+]
+
+.pull-right[
+
+&lt;img src="images/screenshot_example2_part2.png" width="75%" height="100%"&gt;
+]
+
+
+---
+
+# Practice! (part 2)
+
+Create the table output shown below and at the end of `example2/example2_output.html` (code [link](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html))
+
+&lt;img src="images/screenshot_example2_part3.png" width="100%" height="100%"&gt;
+
+
+---
+
+class: middle, inverse
+
+# 3 types of R Markdown content
+
+1. Text
+2. Code chunks
+3. &lt;span style="color:darkorange"&gt; *YAML metadata*&lt;/span&gt;
+
+
+
+---
+
+# YAML metadata 
+
+Many output options can be set in the __YAML metadata__, which is the _first set of code in the file starting and ending with_ `---`.
+
+* YAML is an acronym for *YAML Ain't Markup Language*
+* It sets the configuration specifications for the output file
+* For more details about YAML in general, see the [YAML Wikipedia](https://en.wikipedia.org/wiki/YAML) page
+
+*** 
+
+Set the __title__, __author__, and __date__ that appear at the top of the output file
+
+.pull-left[
+Text in editor:
+&lt;img src="images/screenshot_YAML_top.png" width="90%" height="100%"&gt;
+]
+
+.pull-right[
+Output:
+&lt;img src="images/screenshot_YAML_top_out.png" width="100%" height="100%"&gt;
+]
+
+
+---
+
+# Numbered sections &amp; clickable TOC
+
+
+.pull-left[
+Text in editor: (`example3a.Rmd`)
+&lt;img src="images/screenshot_YAML_TOC_code.png" width="100%" height="100%"&gt;
+Try out `collapsed: yes` and `smooth_scroll: no`
+]
+
+.pull-right[
+Output:  (`example3a.html`)
+&lt;img src="images/screenshot_YAML_TOC_out.png" width="100%" height="100%"&gt;
+]
+
+
+
+---
+
+# Themes
+
+* There are 12 themes to choose from without installing additional packages
+* See http://www.datadreaming.org/post/r-markdown-theme-gallery/ for examples
+
+
+.pull-left[
+Text in editor: (`example3b.Rmd`)
+&lt;img src="images/screenshot_YAML_theme_code.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+Output: (`example3b.html`)
+&lt;img src="images/screenshot_YAML_theme_out.png" width="100%" height="100%"&gt;
+]
+
+
+---
+
+# Code folding 
+
+* Code folding creates buttons in the output html file that lets users choose whether they want to see the R code or not
+  * This only applies to R code from chunks with `echo = TRUE`
+* `code_folding: hide` all R code hidden by default; user must click Code button to see R
+* `code_folding: show` all R code shown by default; user must click Code button to hide R
+* See https://bookdown.org/yihui/rmarkdown/html-document.html#code-folding for more info
+
+&lt;img src="images/screenshot_YAML_codefold.png" width="100%" height="100%"&gt;
+
+---
+
+# Word documents
+
+.pull-left[
+* Not many YAML options
+* Cannot include html code or html-specific commands  
+
+Text in editor: (`Word_example3.Rmd`)
+&lt;img src="images/screenshot_YAML_Word_code.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+Output: (`Word_example3.docx`)
+&lt;img src="images/screenshot_YAML_Word_out.png" width="90%" height="100%"&gt;
+]
+
+
+---
+
+# Word documents - tables options limited
+
+* Cannot use `kableExtra` package options
+* `kable` can be used
+
+&lt;center&gt;&lt;img src="images/screenshot_YAML_Word_tables_out.png" width="75%" height="100%"&gt;&lt;/center&gt;
+
+
+---
+
+# Word documents - using a style file
+
+
+.pull-left[
+* Create a Word doc with preferred formatting
+  * font types and sizes, margins, header colors, etc.
+
+YAML with code to include style file: 
+&lt;img src="images/screenshot_YAML_Word_style_code.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+Sample style file: (`word-styles-reference.docx`)
+&lt;center&gt;&lt;img src="images/screenshot_word_template.png" width="100%" height="100%"&gt;&lt;/center&gt;
+]
+
+The Word doc created by RStudio will have the same formatting as the specified style file.  
+
+
+---
+
+# pdf documents
+
+Producing pdf documents requires that [LaTeX](https://www.latex-project.org/get/) be installed on your computer.
+- This is easiest with the `tinytex` package.
+
+.pull-left[
+* Few YAML options
+* Lots of table options, including kableExtra
+* Can use LaTeX code for formatting
+
+&lt;img src="images/screenshot_YAML_pdf_code.png" width="75%" height="75%"&gt;
+
+See `pdf_example3.Rmd` for code and `pdf_example3.pdf` for output.
+]
+
+.pull-right[
+&lt;center&gt;&lt;img src="images/screenshot_YAML_pdf_out.png" width="60%" height="100%"&gt;&lt;/center&gt;
+]
+
+---
+
+# `rticles` package for scientific manuscripts
+
+.pull-left[
+The [rticles](https://github.com/rstudio/rticles) package contains pre-made Rmarkdown templates for scientific journals.
+
+
+```r
+install.packages("rticles")
+```
+]
+
+.pull-right[
+To use `rticles` from RStudio, you can access the templates through `File -&gt; New File -&gt; R Markdown`. This will open the dialog box where you can select from one of the available templates:
+
+
+&lt;center&gt;&lt;img src="images/rticles.png" width="90%" height="100%"&gt;&lt;/center&gt;
+]
+
+---
+
+# `ASA` template is my personal favorite
+
+.pull-left[
+
+Text in editor: (`Word_example3.Rmd`)
+&lt;img src="images/asa_rticle.png" width="100%" height="100%"&gt;
+]
+
+.pull-right[
+Output: (`test.pdf`)
+&lt;img src="images/asa_rticle_output.png" width="90%" height="100%"&gt;
+]
+
+---
+
+# One last note... citations
+
+Rmarkdown uses `bibtex` for citation management.
+
+In text citations use a 'citation-key' in the bibtex entry.
+
+These are easily cited as `[@Citationkey]` within the text.
+
+
+```r
+@Manual{R-base,
+  title = {R: A Language and Environment for Statistical
+           Computing},
+  author = {{R Core Team}},
+  organization = {R Foundation for Statistical Computing},
+  address = {Vienna, Austria},
+  year = {2019},
+  url = {https://www.R-project.org},
+}
+```
+
+The citation-key for this bibtex entry is `R-base`.
+
+---
+# Practice!
+
+1. Install `rticles` if you  haven't already.
+1. Create a new RMarkdown file using the ASA template.
+1. Add your name as author
+1. Produce a Word document or a pdf document
+
+---
+class: center, middle, inverse
+
+# Reproducible Workflow
+
+---
+
+# Be Organized
+
+Your files must make sense to yourself 6 months from now, and/or other collaborators.
+&lt;center&gt;&lt;img src="images/jenny_filesalad.png" width="90%" height="50%"&gt;&lt;/center&gt;[Jenny Bryan's "What They Forgot to Teach you About R" RStudio::conf2018 training](https://github.com/jennybc/what-they-forgot)
+
+---
+
+# No! Absolute! File! Paths! (don't `setwd()`)
+
+Absolute paths `\(\neq\)` reproducible
+
+Relative paths `\(=\)` reproducible (if done correctly)
+
+&lt;center&gt;&lt;img src="images/jenny_filepath.png" width="80%" height="50%"&gt;&lt;/center&gt;
+
+[Jenny Bryan](https://jennybryan.org/about/)'s oft quoted opinion; see post on [Project-oriented
+workflow](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)
+
+---
+
+# Project directory structure
+
+- The .Rproj file sets your working/home directory (**USE [PROJECTS](https://www.tidyverse.org/articles/2017/12/workflow-vs-script/)**)
+
+
+```r
+# Use a relative path, "relative to" the project folder
+read_csv("mydata.csv") # looks in .Rproj folder
+```
+
+
+- When .Rmd files knit, they look for sourced files *in the folder they live in*
+
+````
+```{r data, eval=TRUE}
+read_csv("mydata.csv") # looks in .Rmd's folder
+```
+````
+
+- It's good practice to organize all your code/data/output into separate folders
+
+These three facts together can cause a headache.  
+* Enter `here::here()`!
+
+---
+
+# Everything in one folder
+
+&lt;img src="images/report2_same_folder_input.png" width="80%" height="60%"&gt;
+
+After knitting, this gives you (file salad)
+
+&lt;img src="images/report2_same_folder_inputandoutput.png" width="80%" height="60%"&gt;
+
+---
+
+# Slightly more organized
+
+&lt;img src="images/report3_subfolder_input.png" width="70%" height="60%"&gt;
+
+
+After knitting, this gives you:
+&lt;img src="images/report3_subfolder_inputandoutput.png" width="70%" height="60%"&gt;
+
+
+
+---
+
+# Dot dot: A tip about "moving up" a directory/folder
+
+- In unix, to point to the folder one level up (it contains the folder you're in), use `..` or `../`
+  - As in `cd ..` moves up one directory, 
+  - or `cp ../myfile.txt newfile.txt` copies a file one level up into the current folder (working directory)
+- In `.Rmd` when you want to source the data in the `data/` folder, you could use `..` to move up a folder into the main directory, and then back down into the `data/` folder:
+
+
+```r
+# From the .Rmd folder, move up one folder then down to the data folder
+mydata &lt;- read_csv("../data/report3_nhanes_data.csv")
+```
+
+&lt;img src="images/report3_subfolder_input.png" width="70%" height="60%"&gt;
+
+
+---
+
+# Knit other types of output
+
+- Journal articles, custom [templates](https://bookdown.org/yihui/rmarkdown/document-templates.html)
+    + File `\(\rightarrow\)` New File `\(\rightarrow\)` R Markdown `\(\rightarrow\)` From template
+- Dashboards: [flexdashboard](https://rmarkdown.rstudio.com/flexdashboard/) report output
+- Interactive reports with [shiny](https://shiny.rstudio.com/)
+- Interactive tutorials with [learnr](https://rstudio.github.io/learnr/)
+- Websites: [blogdown](https://bookdown.org/yihui/blogdown/)
+- Books: [bookdown](https://bookdown.org/)
+- Posters: [posterdown](https://github.com/brentthorne/posterdown)
+- Grad school theses: [thesisdown](https://github.com/ismayc/thesisdown)
+- It's really endless....
+
+---
+
+# References
+
+- [RStudio's R Markdown lessons](https://rmarkdown.rstudio.com/lesson-1.html)
+- Xie Y. et al [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/) book online
+- [Explanation of difference between knitr/Rmd/pandoc](https://stackoverflow.com/questions/40563479/relationship-between-r-markdown-knitr-pandoc-and-bookdown)
+- [Teach data science: Getting started with R Markdown](https://teachdatascience.com/rmarkdown/)
+- Alison Hill &amp; Yihui Xie's [Advanced R Markdown Workshop Materials](https://arm.rbind.io/days/day1/)
+- [UCLA's Intro to R Markdown slides](https://stats.idre.ucla.edu/stat/data/rmarkdown/rmarkdown_seminar.html)
+- [Software Carpentry Learning R Markdown Materials](https://swcarpentry.github.io/r-novice-gapminder/15-knitr-markdown/index.html)
+
+## Cheatsheets:
+
+- [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+- [R Markdown reference guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
