@@ -1,0 +1,185 @@
+---
+title: "ggplot2 exercises"
+date: '`r format(Sys.time(), "Last modified: %d %b %Y")`'
+output: html_document
+---
+
+## Part I -- geoms and aesthetics
+
+These first few exercises will run through some of the simple principles of
+creating a ggplot2 object, assigning aesthetics mappings and geoms.
+
+1. Read in the cleaned patients dataset, `patient-data-cleaned.txt`, into a
+   new object called `patients`.
+
+```{r}
+
+```
+
+1b. How many rows are in `patients`? How many columns?
+
+```{r}
+
+```
+
+### Scatterplots
+
+2. Generate a scatterplot of BMI versus Weight using the patient dataset and add
+   a colour scale based on the Height variable.
+
+```{r}
+
+```
+
+3. Using an additional geom, add an extra layer of a fit line to the previous plot.
+
+```{r}
+
+```
+
+4. Does the fit in the previous plot look good? Look at the help page for
+   `geom_smooth` and adjust the method to fit a straight line without standard
+   error bounds.
+
+```{r}
+
+```
+
+### Boxplots and Violin plots
+
+5. Generate a boxplot of Score values comparing smokers and non-smokers.
+
+```{r}
+
+```
+
+6. Split the previous boxplot into male and female groups with different colours.
+
+```{r}
+
+```
+
+7. Produce a similar boxplot of Scores but this time group data by Sex and colour
+   the interior of the box (not the outline) by Age. Change this plot to a violin
+   plot.
+
+**Note**: Having loaded the data using `read_tsv`, the `Age` column has been 
+set to `dbl` (short for `double`, a `numeric` vector type) as it only contains
+numbers. This makes it a **continuous** variable. In order to split the boxplot
+by age and colour each one according to Age, it is necessary to change age to 
+be a **categorical** variable. We can do this by changing the `Age` column into a
+different vector type: a `factor`. 
+
+```{r}
+
+```
+
+### Histogram and Density plots
+
+8. Generate a histogram of BMIs with each bar coloured blue, choosing a
+    suitable bin width.
+
+```{r}
+
+```
+
+9. Instead of a histogram, generate a density plot of BMI
+
+```{r}
+
+```
+
+10. Generate density plots of BMIs coloured by Sex.
+
+_Hint: alpha can be used to control transparency._
+
+```{r}
+
+```
+
+## Part II - facets
+
+In this next part you will create plots with faceting. First check that the cleaned
+patients dataset has been read in and is available as a data frame in your current
+session. If you haven't done so, convert the Age variable to a factor.
+
+11. Using the patient dataset generate a scatterplot of BMI versus Weight, add a
+    colour scale to the scatterplot based on the Height variable, and split the plot 
+    into a grid of plots separated by Smoking status and Sex.
+
+```{r}
+
+```
+
+12. Generate a boxplot of BMIs comparing smokers and non-smokers, colour boxplot
+    by Sex, and include a separate facet for people of different age.
+
+```{r}
+
+```
+
+13. Produce a similar boxplot of BMIs but this time group data by Sex, colour by Age
+    and facet by Smoking status.
+
+```{r}
+
+```
+
+## Part III -- scales and themes
+
+In these exercises we look at adjusting the scales and themes of our plots.
+
+Check that the cleaned patients dataset has been read in and is available as a data
+frame in your current session. Check also that the Age variable is a factor.
+
+### Scales
+
+14. Generate a scatterplot of BMI versus Weight from the patients dataset.
+
+```{r}
+
+```
+
+15. Starting from the previous plot, adjust the BMI axis to show only labels for 20, 30, 40 and the weight axis to show breaks for 60 to 100 in steps of 5, adding the units (kilograms) to the axis label.
+
+```{r}
+
+```
+
+16. Create a violin plot of BMI by Age where violins are filled using a sequential
+    colour palette.
+
+```{r}
+
+```
+
+17. Create a scatterplot of BMI versus Weight and add a continuous colour scale for
+    the height. Make the colour scale  with a midpoint (set to mean point) colour of
+    grey and extremes of green (low) and red (high).
+
+```{r}
+
+```
+
+### Themes
+
+18. Recreate the scatterplot of BMI by weight this time colouring by age group and add
+    a straight line fit (but no standard error/confidence intervals) for each age group.
+
+```{r}
+
+```
+
+19. Remove the legend title from the previous plot, change the background colours of
+    legend keys to white and place the legend at the bottom of the plot.
+
+```{r}
+
+```
+
+20. Add a title to the plot and remove the minor grid lines.
+    Save the plot to a 7 by 7 inch image file.
+
+```{r}
+
+```
