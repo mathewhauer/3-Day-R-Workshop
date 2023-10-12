@@ -1,0 +1,70 @@
+---
+title: Title here
+
+# set to 1 to the authors and acknowledgements, producing the required blinded version.
+blinded: 0
+
+authors: 
+- name: Author 1
+  thanks: The authors gratefully acknowledge ...
+  affiliation: Department of YYY, University of XXX
+
+keywords:
+- 3 to 6 keywords
+- that do not appear in the title
+abstract: |
+  The text of your abstract.  200 or fewer words.
+
+bibliography: bibliography.bib
+biblio-style: apalike # default is using plain.bst
+output: rticles::asa_article
+---
+
+```{r , include=FALSE, eval=FALSE}
+# Instructions
+
+This template demonstrates some of the basic latex you'll need to know to create a ASA article. It is built from template find at Journal of the American Statistical Association [instruction for authors](https://www.tandfonline.com/action/authorSubmission?show=instructions&journalCode=uasa20#formatting).
+
+We are going to produce a reproducible workflow. 
+
+1) I want you to load in the starwars data.
+
+2) I want you to produce some transformations of the data.
+ - you could even run a statistical model using the function `lm()` - which stands for 'linear model'
+
+3) Create one figure based on the data.
+
+4) Write up your findings as though it were a short journal article.
+ - Make sure you use inline code to call specific values in your text.
+
+5)  Make sure to download a few relevant citations, put them in the `bibliography.bib` file, and reference them in the document.
+
+```
+
+
+```{r , echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+data("starwars")
+
+# lm1 <- lm(height~mass, data = starwars)
+# summary(lm1)
+```
+
+
+# Main Text
+
+Lorem Ipsum. [@Galyardt14mmm] wrote a fantastic article.
+
+# Results
+
+**\autoref{figure-starwars}** shows the results of our analysis. The average mass is `r mean(starwars$mass, na.rm=T)` pounds.
+
+```{r MainFigure, echo=FALSE, message=FALSE, warning=FALSE, fig.cap=paste("**Title of your figure.** This is a short description of the figure. \\label{figure-starwars}")}
+
+plot(pressure)
+
+```
+
+# Conclusion
+
+# Bibliography
